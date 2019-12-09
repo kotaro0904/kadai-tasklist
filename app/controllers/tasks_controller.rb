@@ -3,14 +3,7 @@ class TasksController < ApplicationController
   before_action :correct_user, only: [:destroy, :show, :edit, :update]
   
   def index
-    if logged_in?
-      @task = current_user.tasks.build  # form_with 用
       @tasks = current_user.tasks.order(id: :desc).page(params[:page])
-    end
-  end
-
-  def show
-      @task = Task.find(params[:id])
   end
 
   def new
@@ -27,10 +20,6 @@ class TasksController < ApplicationController
       flash.now[:danger] = 'Taskの投稿に失敗しました。'
       render 'tasks/new'
     end
-  end
-  
-  def edit
-      @task = Task.find(params[:id])
   end
   
   def update
@@ -54,10 +43,6 @@ class TasksController < ApplicationController
   end
   
   private
-
-  def set_task
-    @task = Task.find(params[:id])
-  end
     
  # Strong Parameter
   def tasks_params
